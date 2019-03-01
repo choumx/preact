@@ -32,6 +32,7 @@
     "test": "npm-run-all lint --parallel test:mocha test:karma test:ts test:flow test:size",
     "test:flow": "flow check",
     "test:ts": "tsc -p test/ts/ && mocha --require babel-register test/ts/**/*-test.js",
+    "test:workerdom": "mocha --recursive --require babel-register test/browser",
     "test:mocha": "mocha --recursive --require babel-register test/shared test/node",
     "test:karma": "karma start test/karma.conf.js --single-run",
     "test:mocha:watch": "npm run test:mocha -- --watch",

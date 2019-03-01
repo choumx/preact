@@ -1,21 +1,27 @@
 import { h, render, Component } from '../../src/preact';
 /** @jsx h */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+
 const CHILDREN_MATCHER = sinon.match( v => v==null || Array.isArray(v) && !v.length , '[empty children]');
 
 describe('context', () => {
 	let scratch;
 
-	before( () => {
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	beforeEach( () => {
-		scratch.innerHTML = '';
-	});
-
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});

@@ -1,7 +1,17 @@
 /* global DISABLE_FLAKEY */
 
 import { h, render, Component, rerender } from '../../src/preact';
-/** @jsx h */
+// /** @jsx h */
+
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
 
 function getAttributes(node) {
 	let attrs = {};
@@ -23,13 +33,9 @@ function sortAttributes(html) {
 describe('render()', () => {
 	let scratch;
 
-	before( () => {
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
-	});
-
-	beforeEach( () => {
-		scratch.innerHTML = '';
 	});
 
 	after( () => {
@@ -489,7 +495,7 @@ describe('render()', () => {
 
 			expect(click, 'click').to.have.been.calledOnce;
 
-			if (DISABLE_FLAKEY!==true) {
+			if (true) {//DISABLE_FLAKEY!==true) {
 				// Focus delegation requires a 50b hack I'm not sure we want to incur
 				expect(focus, 'focus').to.have.been.calledOnce;
 

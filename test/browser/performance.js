@@ -2,9 +2,19 @@
 /*eslint no-console:0*/
 /** @jsx h */
 
-let { h, Component, render } = require(NODE_ENV==='production' ? '../../dist/preact.min.js' : '../../src/preact');
+let { h, Component, render } = require('../../src/preact');//require(NODE_ENV==='production' ? '../../dist/preact.min.js' : '../../src/preact');
 
-const MULTIPLIER = ENABLE_PERFORMANCE ? (coverage ? 5 : 1) : 999999;
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+
+const MULTIPLIER = 1; //ENABLE_PERFORMANCE ? (coverage ? 5 : 1) : 999999;
 
 
 let now = typeof performance!=='undefined' && performance.now ? () => performance.now() : () => +new Date();
@@ -56,19 +66,12 @@ describe('performance', function() {
 
 	this.timeout(10000);
 
-	before( () => {
-		if (coverage) {
-			console.warn('WARNING: Code coverage is enabled, which dramatically reduces performance. Do not pay attention to these numbers.');
-		}
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	beforeEach( () => {
-		scratch.innerHTML = '';
-	});
-
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});

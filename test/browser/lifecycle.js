@@ -1,6 +1,16 @@
 import { h, render, rerender, Component } from '../../src/preact';
 /** @jsx h */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+
 let spyAll = obj => Object.keys(obj).forEach( key => sinon.spy(obj,key) );
 
 const EMPTY_CHILDREN = [];
@@ -8,16 +18,12 @@ const EMPTY_CHILDREN = [];
 describe('Lifecycle methods', () => {
 	let scratch;
 
-	before( () => {
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	beforeEach( () => {
-		scratch.innerHTML = '';
-	});
-
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});
@@ -1209,7 +1215,7 @@ describe('Lifecycle methods', () => {
 	let _it = it;
 	describe('#constructor and component(Did|Will)(Mount|Unmount)', () => {
 		/* global DISABLE_FLAKEY */
-		let it = DISABLE_FLAKEY ? xit : _it;
+		let it = _it; //DISABLE_FLAKEY ? xit : _it;
 
 		let setState;
 		class Outer extends Component {

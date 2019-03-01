@@ -1,6 +1,16 @@
 import { h, render, Component } from '../../src/preact';
 /** @jsx h */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+
 // gives call count and argument errors names (otherwise sinon just uses "spy"):
 let spy = (name, ...args) => {
 	let spy = sinon.spy(...args);
@@ -11,16 +21,12 @@ let spy = (name, ...args) => {
 describe('refs', () => {
 	let scratch;
 
-	before( () => {
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	beforeEach( () => {
-		scratch.innerHTML = '';
-	});
-
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});

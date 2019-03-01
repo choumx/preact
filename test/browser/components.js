@@ -1,6 +1,16 @@
 import { h, cloneElement, render, rerender, Component } from '../../src/preact';
 /** @jsx h */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+
 let spyAll = obj => Object.keys(obj).forEach( key => sinon.spy(obj,key) );
 
 function getAttributes(node) {
@@ -27,18 +37,12 @@ const Empty = () => null;
 describe('Components', () => {
 	let scratch;
 
-	before( () => {
+	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	beforeEach( () => {
-		let c = scratch.firstElementChild;
-		if (c) render(<Empty />, scratch, c);
-		scratch.innerHTML = '';
-	});
-
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});
