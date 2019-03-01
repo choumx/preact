@@ -33,12 +33,18 @@ function sortAttributes(html) {
 describe('render()', () => {
 	let scratch;
 
+	function resetScratch() {
+		scratch.parentNode.removeChild(scratch);
+		scratch = document.createElement('div');
+		(document.body || document.documentElement).appendChild(scratch);
+	}
+
 	beforeEach( () => {
 		scratch = document.createElement('div');
 		(document.body || document.documentElement).appendChild(scratch);
 	});
 
-	after( () => {
+	afterEach( () => {
 		scratch.parentNode.removeChild(scratch);
 		scratch = null;
 	});
@@ -64,7 +70,7 @@ describe('render()', () => {
 		expect(scratch.childNodes).to.have.length(1);
 		expect(scratch.childNodes[0].nodeName).to.equal('DIV');
 
-		scratch.innerHTML = '';
+		resetScratch();
 
 		render(<span />, scratch);
 		expect(scratch.childNodes).to.have.length(1);
@@ -77,7 +83,7 @@ describe('render()', () => {
 		expect(scratch.childNodes).to.have.length(1);
 		expect(scratch.firstChild).to.have.property('nodeName', 'FOO');
 
-		scratch.innerHTML = '';
+		resetScratch();
 
 		render(<x-bar />, scratch);
 		expect(scratch.childNodes).to.have.length(1);
