@@ -13,6 +13,11 @@ import {workerDOM} from '../workerdom';
 global.window = workerDOM;
 global.document = window.document;
 
+// import {JSDOM} from 'jsdom';
+// global.window = new JSDOM().window;
+// global.document = window.document;
+
+
 describe('Component spec', () => {
 	let scratch, rerender;
 

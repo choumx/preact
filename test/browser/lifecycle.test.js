@@ -8,9 +8,14 @@ import sinon from 'sinon';
 import chai from 'chai';
 const expect = chai.expect;
 chai.use(require('sinon-chai'));
+
 import {workerDOM} from '../workerdom';
 global.window = workerDOM;
 global.document = window.document;
+
+// import {JSDOM} from 'jsdom';
+// global.window = new JSDOM().window;
+// global.document = window.document;
 
 
 let spyAll = obj => Object.keys(obj).forEach( key => sinon.spy(obj,key) );
@@ -2822,9 +2827,9 @@ describe('Lifecycle methods', () => {
 					// are currently unmounted after those elements, so their
 					// DOM is unmounted prior to the method being called.
 					//expect(document.getElementById('InnerDiv'), 'Inner componentWillUnmount').to.exist;
-					setTimeout( () => {
+					// setTimeout( () => {
 						expect(document.getElementById('InnerDiv'), 'Inner after componentWillUnmount').to.not.exist;
-					}, 0);
+					// }, 0);
 				}
 
 				render() {

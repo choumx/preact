@@ -19,6 +19,7 @@ global.document = window.document;
 // global.window = new JSDOM().window;
 // global.document = window.document;
 
+
 function getAttributes(node) {
 	let attrs = {};
 	for (let i=node.attributes.length; i--; ) {

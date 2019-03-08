@@ -3,6 +3,21 @@ import { setupScratch, teardown, setupRerender } from '../_util/helpers';
 import { div, span, input as inputStr } from '../_util/dom';
 /* eslint-disable react/jsx-boolean-value */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+// import {JSDOM} from 'jsdom';
+// global.window = new JSDOM().window;
+// global.document = window.document;
+
+
 /** @jsx h */
 describe('focus', () => {
 

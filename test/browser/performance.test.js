@@ -2,17 +2,22 @@
 /*eslint no-console:0*/
 /** @jsx h */
 import { setupScratch, teardown } from '../_util/helpers';
-let { createElement: h, Component, render, hydrate } = require(NODE_ENV==='production' ? '../../dist/preact.min.js' : '../../dist/preact');
+let { createElement: h, Component, render, hydrate } = require('../../dist/preact');// require(NODE_ENV==='production' ? '../../dist/preact.min.js' : '../../dist/preact');
 
-const MULTIPLIER = ENABLE_PERFORMANCE ? (coverage ? 5 : 1) : 999999;
+const MULTIPLIER = 1; //ENABLE_PERFORMANCE ? (coverage ? 5 : 1) : 999999;
 
 import sinon from 'sinon';
 import chai from 'chai';
 const expect = chai.expect;
 chai.use(require('sinon-chai'));
+
 import {workerDOM} from '../workerdom';
 global.window = workerDOM;
 global.document = window.document;
+
+// import {JSDOM} from 'jsdom';
+// global.window = new JSDOM().window;
+// global.document = window.document;
 
 // let now = typeof performance!=='undefined' && performance.now ? () => performance.now() : () => +new Date();
 if (typeof performance === 'undefined') window.performance = { now: () => +new Date() };
@@ -67,7 +72,7 @@ describe('performance', function() {
 
 	before(function () {
 		if (!ENABLE_PERFORMANCE) this.skip();
-		if (coverage) {
+		if (false) {//coverage) {
 			console.warn('WARNING: Code coverage is enabled, which dramatically reduces performance. Do not pay attention to these numbers.');
 		}
 	});

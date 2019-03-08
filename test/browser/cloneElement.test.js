@@ -2,6 +2,21 @@ import { createElement, cloneElement } from '../../src/index';
 
 /** @jsx createElement */
 
+
+import sinon from 'sinon';
+import chai from 'chai';
+const expect = chai.expect;
+chai.use(require('sinon-chai'));
+
+import {workerDOM} from '../workerdom';
+global.window = workerDOM;
+global.document = window.document;
+
+// import {JSDOM} from 'jsdom';
+// global.window = new JSDOM().window;
+// global.document = window.document;
+
+
 describe('cloneElement', () => {
 	it('should clone components', () => {
 		function Comp () {}
