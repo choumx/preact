@@ -109,9 +109,9 @@ describe('svg', () => {
 				</g>
 			</svg>
 		), scratch);
-
-		expect(scratch.getElementsByTagName('a'))
-			.to.have.property('0')
-			.that.is.a('HTMLAnchorElement');
+		const anchors = scratch.getElementsByTagName('a');
+		expect(anchors.length).to.equal(1);
+		const a = anchors[0];
+		expect(a.constructor.name).to.equal('HTMLAnchorElement');
 	});
 });
