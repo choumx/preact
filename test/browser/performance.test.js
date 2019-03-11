@@ -71,7 +71,7 @@ describe('performance', function() {
 	this.timeout(10000);
 
 	before(function () {
-		if (!ENABLE_PERFORMANCE) this.skip();
+		if (!false) this.skip();
 		if (false) {//coverage) {
 			console.warn('WARNING: Code coverage is enabled, which dramatically reduces performance. Do not pay attention to these numbers.');
 		}

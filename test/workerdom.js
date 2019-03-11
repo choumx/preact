@@ -4541,7 +4541,10 @@ class HTMLTableElement extends HTMLElement {
   }
 
 }
-registerSubclass('table', HTMLTableElement); // Unimplemented Properties
+registerSubclass('table', HTMLTableElement);
+reflectProperties([{ border: [''] }], HTMLTableElement);
+
+// Unimplemented Properties
 // HTMLTableElement.sortable => boolean
 // Unimplemented Methods
 // HTMLTableElement.createTHead()
@@ -5324,6 +5327,8 @@ export const workerDOM = {
   url: '/',
   appendKeys,
   consumeInitialDOM,
+  Element,
+  Text,
   HTMLAnchorElement,
   HTMLButtonElement,
   HTMLDataElement,

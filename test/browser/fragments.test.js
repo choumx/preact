@@ -12,6 +12,8 @@ chai.use(require('sinon-chai'));
 import {workerDOM} from '../workerdom';
 global.window = workerDOM;
 global.document = window.document;
+global.Element = window.Element;
+global.Text = window.Text;
 
 // import {JSDOM} from 'jsdom';
 // global.window = new JSDOM().window;
