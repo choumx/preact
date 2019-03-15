@@ -5359,4 +5359,4 @@ export const workerDOM = {
   HTMLTimeElement
 }; // workerDOM ends up being the window object.
 
-workerDOM.appendKeys(['color', 'background', 'backgroundPosition', 'background-size', 'backgroundSize', 'backgroundColor', 'padding', 'top', 'left']);
+workerDOM.appendKeys(['background', 'backgroundPosition', 'background-size', 'backgroundSize', 'backgroundColor', 'color', 'display', 'left', 'padding', 'top', 'zIndex']);
