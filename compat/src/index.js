@@ -124,14 +124,6 @@ function createElement(...args) {
 			delete props.defaultValue;
 		}
 
-		if (Array.isArray(props.value) && props.multiple && type==='select') {
-			toChildArray(props.children).forEach((child) => {
-				if (props.value.indexOf(child.props.value)!==-1) {
-					child.props.selected = true;
-				}
-			});
-			delete props.value;
-		}
 		handleElementVNode(vnode, props);
 	}
 
@@ -280,22 +272,16 @@ Component.prototype.isReactComponent = {};
  */
 function memo(c, comparer) {
 	function shouldUpdate(nextProps) {
-		let ref = this.props.ref;
-		let updateRef = ref==nextProps.ref;
-		if (!updateRef) {
-			ref.call ? ref(null) : (ref.current = null);
-		}
-		return (comparer==null
-			? shallowDiffers(this.props, nextProps)
-			: !comparer(this.props, nextProps)) || !updateRef;
+		return !comparer(this.props, nextProps);
 	}
 
-	function Memoed(props) {
-		this.shouldComponentUpdate = shouldUpdate;
-		return h(c, { ...props });
+	function Memoed(props, context) {
+		this.shouldComponentUpdate =
+			this.shouldComponentUpdate ||
+			(comparer ? shouldUpdate : PureComponent.prototype.shouldComponentUpdate);
+		return c.call(this, props, context);
 	}
 	Memoed.displayName = 'Memo(' + (c.displayName || c.name) + ')';
-	Memoed._forwarded = true;
 	return Memoed;
 }
 
@@ -335,7 +321,7 @@ options.vnode = vnode => {
 	vnode.$$typeof = REACT_ELEMENT_TYPE;
 
 	let type = vnode.type;
-	if (type!=null && type._forwarded && vnode.ref!=null) {
+	if (type!=null && type._forwarded) {
 		vnode.props.ref = vnode.ref;
 		vnode.ref = null;
 	}

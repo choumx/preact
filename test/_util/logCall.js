@@ -28,11 +28,7 @@ export function logCall(obj, method) {
 			if (c) c += ', ';
 			c += serialize(args[i]);
 		}
-
-		// Normalize removeChild -> remove to keep output clean and readable
-		const operation = method!='removeChild'
-			? `${serialize(this)}.${method}(${c})`
-			: `${serialize(c)}.remove()`;
+		const operation = `${serialize(this)}.${method}(${c})`;
 		log.push(operation);
 		return old.apply(this, args);
 	};
